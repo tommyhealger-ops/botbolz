@@ -76,6 +76,38 @@ Invoke-RestMethod -Uri "https://api.telegram.org/botВАШ_ТОКЕН/setWebhook
 
 **Если окно с заголовком `PC Control tunnel - DO NOT CLOSE` не появилось:** обновите файлы проекта и повторите. Если оно появилось, но в нём красная ошибка — сделайте скриншот этого окна и пришлите его. Не присылайте содержимое `.env`, токен бота, `OWNER_API_KEY` или код привязки.
 
+### Если `.bat`-файл закрывается: запуск туннеля прямо в терминале
+
+Это нормальный и более надёжный способ: окно PowerShell уже открыто, поэтому оно не закроется само.
+
+1. Убедитесь, что окно `start_server_windows.bat` уже работает и в нём есть `Uvicorn running ...`.
+2. Нажмите **Пуск**, напишите `PowerShell`, нажмите **Windows PowerShell**.
+3. Сначала вставьте и нажмите Enter:
+
+```powershell
+where.exe cloudflared
+```
+
+4. Если увидели путь, например `C:\Program Files (x86)\cloudflared\cloudflared.exe`, вставьте следующую команду и нажмите Enter:
+
+```powershell
+cloudflared tunnel --url http://localhost:8000
+```
+
+Не закрывайте PowerShell. В нём будет адрес `https://...trycloudflare.com`, который нужно вставить в `PUBLIC_BASE_URL`.
+
+5. Если команда `where.exe cloudflared` **ничего не вывела**, выполните установку ещё раз:
+
+```powershell
+winget install --id Cloudflare.cloudflared -e --accept-package-agreements --accept-source-agreements
+```
+
+После завершения **закройте PowerShell, откройте новый PowerShell** и повторите пункты 3–4. Если `where.exe` по-прежнему ничего не выводит, запустите туннель полной командой:
+
+```powershell
+& "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url http://localhost:8000
+```
+
 ### Шаг 6. Подключить компьютер
 
 1. На компьютере с сервером откройте PowerShell в папке проекта: в проводнике откройте папку, кликните по пустому месту с зажатым **Shift** → «Открыть в Терминале».
