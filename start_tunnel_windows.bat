@@ -22,10 +22,13 @@ exit /b
 
 :start
 echo.
-echo Do not close this window while you use the Telegram panel.
-echo Copy the https://...trycloudflare.com address shown below.
+echo A separate PowerShell window will now open and will stay open.
+echo Do not close it while you use the Telegram panel.
+echo Copy the https://...trycloudflare.com address shown there.
+echo The same text is saved in tunnel.log in this project folder.
 echo.
-cloudflared tunnel --url http://localhost:8000
+set "TUNNEL_LOG=%~dp0tunnel.log"
+powershell -NoLogo -NoExit -Command "& cloudflared tunnel --url http://localhost:8000 2>&1 | Tee-Object -FilePath '%TUNNEL_LOG%'"
 pause
 exit /b
 

@@ -1,5 +1,6 @@
 .env
 data/
+tunnel.log
 __pycache__/
 *.py[cod]
 .venv/
