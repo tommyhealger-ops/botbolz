@@ -5,8 +5,10 @@ cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (
   echo Creating Python environment. This runs only once...
   python -m venv .venv || goto :error
-  .venv\Scripts\python.exe -m pip install -r requirements.txt || goto :error
 )
+
+echo Checking program components. This can take a few minutes on first run...
+.venv\Scripts\python.exe -m pip install -r requirements.txt || goto :error
 
 if not exist agent-state.json (
   echo.
